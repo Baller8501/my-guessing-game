@@ -1,5 +1,4 @@
 
-
 import streamlit as st
 from supabase import create_client, Client
 import random
@@ -294,9 +293,9 @@ def start_level():
     st.session_state.message = ""
 
 
+# FIXED: Score is no longer reset when starting a new cycle.
 def reset_game():
     st.session_state.level = 1
-    st.session_state.score = 0
     st.session_state.game_over = False
     st.session_state.target = None
     start_level()
@@ -576,6 +575,7 @@ display_daily_challenges()
 
 left_col, right_col = st.columns([3, 1])
 
+
 # ==========================================
 # LEFT SIDE: MAIN GAME
 # ==========================================
@@ -616,7 +616,6 @@ with left_col:
 
             st.session_state.attempts += 1
 
-            # Update guessing challenge
             update_challenge("guessing_expert", 1)
 
             if guess == st.session_state.target:
@@ -631,7 +630,6 @@ with left_col:
                 st.session_state.games_won += 1
                 st.session_state.levels_completed += 1
 
-                # Update level and coin challenges
                 update_challenge("level_master", 1)
                 update_challenge("coin_collector", reward)
 
